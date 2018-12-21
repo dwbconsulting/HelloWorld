@@ -1,0 +1,18 @@
+version: 0.2
+# https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html
+
+phases:
+  install:
+    commands:
+      - bash -c "$(curl -fsSL https://raw.githubusercontent.com/thii/aws-codebuild-extra
+s/master/install)"
+  pre_build:
+    commands:
+      - aws sts get-caller-identity
+      - ENV=$(echo ${CODEBUILD_SOURCE_VERSION} | awk -F/ '{print $3}')
+  build:
+    commands:
+      - printenv
+  post_build:
+    commands:
+      - echo "THE END"
